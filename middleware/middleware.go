@@ -3,6 +3,7 @@ package middleware
 import (
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -19,7 +20,7 @@ func Logging(next http.Handler) http.Handler {
 // Auth checks for a specific API Key
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Header.Get("X-API-Key") != "super-secret-password" {
+		if r.Header.Get("X-API-Key") != os.Getenv("Auth") {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}

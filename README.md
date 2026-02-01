@@ -46,13 +46,27 @@ A simple RESTful HTTP server built with Go, demonstrating a clean, layered archi
 
 ### Prerequisites
 - Go 1.18 or higher installed.
+- PostgreSQL running locally.
+
+### Setup
+1. Create a database named `go_user`.
+2. Configure your environment variables in a `.env` file:
+   ```env
+   DB_HOST=localhost
+   DB_USER=your_user
+   DB_PASSWORD=your_password
+   DB_NAME=go_user
+   DB_PORT=5432
+   Auth=your_secret_key
+   PORT=8080
+   ```
 
 ### Run the Server
 Use the `go run` command in the root directory to start the server:
 ```bash
 go run .
 ```
-The server will start on `http://localhost:8080`.
+The server will start on the port specified in your `.env` file (default `http://localhost:8080`).
 
 ### Build from Source
 To compile the project into a binary:

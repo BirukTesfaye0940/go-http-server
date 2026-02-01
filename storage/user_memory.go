@@ -1,49 +1,53 @@
 package storage
 
-import (
-	"context"
-	"errors"
-	"sync"
+/*
+package storage
 
-	"go-http-server/models"
-)
+// import (
+// 	"context"
+// 	"errors"
+// 	"sync"
 
-type UserRepository struct {
-	mu    sync.Mutex
-	users []models.User
-}
+// 	"go-http-server/models"
+// )
 
-func NewUserRepository() *UserRepository {
-	return &UserRepository{
-		users: []models.User{},
-	}
-}
+// type UserRepository struct {
+// 	mu    sync.Mutex
+// 	users []models.User
+// }
 
-func (r *UserRepository) Create(ctx context.Context, user models.User) (models.User, error) {
-	r.mu.Lock()
-	defer r.mu.Unlock()
+// func NewUserRepository() *UserRepository {
+// 	return &UserRepository{
+// 		users: []models.User{},
+// 	}
+// }
 
-	user.ID = len(r.users) + 1
-	r.users = append(r.users, user)
+// func (r *UserRepository) Create(ctx context.Context, user models.User) (models.User, error) {
+// 	r.mu.Lock()
+// 	defer r.mu.Unlock()
 
-	return user, nil
-}
+// 	user.ID = len(r.users) + 1
+// 	r.users = append(r.users, user)
 
-func (r *UserRepository) GetAll(ctx context.Context) ([]models.User, error) {
-	r.mu.Lock()
-	defer r.mu.Unlock()
+// 	return user, nil
+// }
 
-	return r.users, nil
-}
+// func (r *UserRepository) GetAll(ctx context.Context) ([]models.User, error) {
+// 	r.mu.Lock()
+// 	defer r.mu.Unlock()
 
-func (r *UserRepository) GetByID(ctx context.Context, id int) (models.User, error) {
-	r.mu.Lock()
-	defer r.mu.Unlock()
+// 	return r.users, nil
+// }
 
-	for _, u := range r.users {
-		if u.ID == id {
-			return u, nil
-		}
-	}
-	return models.User{}, errors.New("user not found")
-}
+// func (r *UserRepository) GetByID(ctx context.Context, id int) (models.User, error) {
+// 	r.mu.Lock()
+// 	defer r.mu.Unlock()
+
+// 	for _, u := range r.users {
+// 		if u.ID == id {
+// 			return u, nil
+// 		}
+// 	}
+// 	return models.User{}, errors.New("user not found")
+// }
+*/
