@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"go-http-server/models"
 	"go-http-server/storage"
@@ -18,13 +19,15 @@ func NewUserHandler(repo *storage.UserRepository) *UserHandler {
 
 func (h *UserHandler) Users(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-
 	case http.MethodGet:
-		h.getUsers(w, r)
-
+		// Check if an "id" query parameter exists
+		if r.URL.Query().Get("id") != "" {
+			h.getUserByID(w, r)
+		} else {
+			h.getUsers(w, r)
+		}
 	case http.MethodPost:
 		h.createUser(w, r)
-
 	default:
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -39,6 +42,30 @@ func (h *UserHandler) getUsers(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(users)
+}
+
+func (h *UserHandler) getUserByID(w http.ResponseWriter, r *http.Request) {
+	// 1. Extract the ID from the URL query string
+	idStr := r.URL.Query().Get("id")
+
+	// 2. Convert the string ID to an integer
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid user ID format", http.StatusBadRequest)
+		return
+	}
+
+	// 3. Call the storage layer
+	user, err := h.repo.GetByID(r.Context(), id)
+	if err != nil {
+		// If storage returns "user not found", send a 404
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	// 4. Return the user as JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
 }
 
 func (h *UserHandler) createUser(w http.ResponseWriter, r *http.Request) {
