@@ -1,33 +1,15 @@
 package main
 
-import "fmt"
-
-type Notifier interface {
-	Send(message string)
-}
-
-type EmailNotifier struct {
-}
-
-func (e EmailNotifier) Send(message string) {
-	fmt.Println("Email:", message)
-}
-
-type SMSNotifier struct {
-}
-
-func (s SMSNotifier) Send(message string) {
-	fmt.Println("SMS:", message)
-}
-
-func Notify(n Notifier, msg string) {
-	n.Send(msg)
-}
+import (
+	"log"
+)
 
 func main() {
-	email := EmailNotifier{}
-	sms := SMSNotifier{}
+	server := NewServer()
 
-	Notify(email, "Welcome user")
-	Notify(sms, "Your code is 1234")
+	log.Println("Server running on :8080")
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
