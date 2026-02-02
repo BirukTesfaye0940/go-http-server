@@ -5,9 +5,13 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/go-playground/validator/v10"
+
 	"go-http-server/models"
 	"go-http-server/storage"
 )
+
+var validate = validator.New()
 
 type UserHandler struct {
 	repo *storage.UserRepository
@@ -77,7 +81,7 @@ func (h *UserHandler) createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if input.Name == "" || input.Email == "" {
+	if err := validate.Struct(input); err != nil {
 		http.Error(w, "Invalid user data", http.StatusBadRequest)
 		return
 	}

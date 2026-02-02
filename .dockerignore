@@ -1,0 +1,18 @@
+# Ignore local binaries
+main
+bin/
+
+# Ignore local database data if you have it in a folder
+postgres_data/
+
+# Ignore sensitive files (they should come from env or secrets)
+.env
+*.pem
+
+# Ignore git metadata (this can be hundreds of MBs)
+.git
+.gitignore
+
+# Ignore logs and temp files
+*.log
+tmp/
